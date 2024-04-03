@@ -10,7 +10,6 @@ import java.util.List;
 @RequestMapping("/asterix/characters")
 @RequiredArgsConstructor
 
-
 public class Controller {
 
     private final CharacterRepo repo;
@@ -23,5 +22,22 @@ public class Controller {
     @GetMapping
     public List<Characters> getAllCharacters() {
         return repo.findAll();
+    }
+
+
+//    @PutMapping("/{id}/age")
+//    public void updateAge(@PathVariable String id, @RequestBody int age) {
+//        if(repo.existsById(id)){
+//            repo.deleteById(id);
+//            repo.save(character -> repo.save(new Characters(id, , age ))
+//        };
+//
+//    }
+
+
+    @DeleteMapping("/{id}")
+    public void deleteCharacter(@PathVariable String id) {
+        repo.deleteById(id);
+
     }
 }
