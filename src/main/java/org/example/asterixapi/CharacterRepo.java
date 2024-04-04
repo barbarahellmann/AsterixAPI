@@ -9,8 +9,4 @@ import java.util.List;
 @Repository
 public interface CharacterRepo extends MongoRepository<Characters, String> {
 
-    public Characters getCharacterById(String id);
-
-
-
 }
