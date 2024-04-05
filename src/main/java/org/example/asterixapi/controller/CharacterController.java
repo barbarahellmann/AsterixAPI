@@ -1,7 +1,10 @@
-package org.example.asterixapi;
+package org.example.asterixapi.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.asterixapi.model.Characters;
+import org.example.asterixapi.repo.CharacterRepo;
+import org.example.asterixapi.service.CharacterService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,18 +13,18 @@ import java.util.List;
 @RequestMapping("/asterix/characters")
 @RequiredArgsConstructor
 
-public class Controller {
+public class CharacterController {
 
-    private final CharacterRepo repo;
+    private final CharacterService service;
 
     @PostMapping
     public void saveNewCharacter(@RequestBody Characters character) {
-        repo.save(character);
+        service.createNewCharacter(character);
     }
 
     @GetMapping
     public List<Characters> getAllCharacters() {
-        return repo.findAll();
+        return service.getAllCharacters();
     }
 
 
@@ -37,7 +40,7 @@ public class Controller {
 
     @DeleteMapping("/{id}")
     public void deleteCharacter(@PathVariable String id) {
-        repo.deleteById(id);
+        service.deleteCharacter(id);
 
     }
 }
