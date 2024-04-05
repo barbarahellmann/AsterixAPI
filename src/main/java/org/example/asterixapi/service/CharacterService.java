@@ -7,6 +7,7 @@ import org.example.asterixapi.repo.CharacterRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -15,16 +16,20 @@ public class CharacterService {
     private final CharacterRepo repo;
 
     public void createNewCharacter(CharacterWOId character) {
-        Character newCharachter = new Character(
+        Character newCharacter = new Character(
                 UUID.randomUUID().toString(),
                 character.name(),
                 character.age(),
                 character.profession());
-        repo.save(newCharachter);
+        repo.save(newCharacter);
     }
 
     public List<Character> getAllCharacters() {
         return repo.findAll();
+    }
+
+    public Optional<Character> getCharacterById(String id) {
+        return repo.findById(id);
     }
 
     public void deleteCharacter(String id) {
