@@ -1,23 +1,29 @@
 package org.example.asterixapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.asterixapi.model.Characters;
+import org.example.asterixapi.dto.CharacterWOId;
+import org.example.asterixapi.model.Character;
 import org.example.asterixapi.repo.CharacterRepo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CharacterService {
     private final CharacterRepo repo;
 
-    public void createNewCharacter(Characters character) {
-        repo.save(character);
+    public void createNewCharacter(CharacterWOId character) {
+        Character newCharachter = new Character(
+                UUID.randomUUID().toString(),
+                character.name(),
+                character.age(),
+                character.profession());
+        repo.save(newCharachter);
     }
 
-    public List<Characters> getAllCharacters() {
+    public List<Character> getAllCharacters() {
         return repo.findAll();
     }
 
