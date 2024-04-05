@@ -14,10 +14,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CharacterService {
     private final CharacterRepo repo;
+    private final IdService idService;
 
     public void createNewCharacter(CharacterWOId character) {
         Character newCharacter = new Character(
-                UUID.randomUUID().toString(),
+                idService.generateID(),
                 character.name(),
                 character.age(),
                 character.profession());

@@ -1,6 +1,7 @@
 package org.example.asterixapi.service;
 
 
+import org.example.asterixapi.dto.CharacterWOId;
 import org.example.asterixapi.repo.CharacterRepo;
 import org.example.asterixapi.model.Character;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,12 @@ import static org.mockito.Mockito.*;
 
 class CharacterServiceTest {
 private final CharacterRepo mockRepo = mock(CharacterRepo.class);
+private final IdService mockIdService = mock(IdService.class);
+
     @Test
     void test_getAllCharacters() {
         // GIVEN
-        CharacterService serviceTest = new CharacterService(mockRepo);
+        CharacterService serviceTest = new CharacterService(mockRepo, mockIdService);
         Character testCharacter = new Character(
                 "testId",
                 "testname",
@@ -35,7 +38,7 @@ private final CharacterRepo mockRepo = mock(CharacterRepo.class);
     @Test
     void test_getCharacterById() {
         // GIVEN
-        CharacterService serviceTest = new CharacterService(mockRepo);
+        CharacterService serviceTest = new CharacterService(mockRepo, mockIdService);
         Character testCharacter = new Character(
                 "testId",
                 "testname",
@@ -56,7 +59,7 @@ private final CharacterRepo mockRepo = mock(CharacterRepo.class);
     @Test
     void test_updateCharacter(){
         //GIVEN
-        CharacterService serviceTest = new CharacterService(mockRepo);
+        CharacterService serviceTest = new CharacterService(mockRepo, mockIdService);
         Character testCharacter = new Character(
                 "test",
                 "moin",
@@ -71,17 +74,41 @@ private final CharacterRepo mockRepo = mock(CharacterRepo.class);
         verify(mockRepo).save(testCharacter);
     }
 
-
     @Test
     void deleteCharacter() {
         //GIVEN
-        CharacterService serviceTest = new CharacterService(mockRepo);
+        CharacterService serviceTest = new CharacterService(mockRepo, mockIdService);
 
         //WHEN
         serviceTest.deleteCharacter("string2");
 
         //THEN
         verify(mockRepo).deleteById("string2");
+    }
+
+    @Test
+    void test_createNewCharacter() {
+
+        //GIVEN
+        CharacterService serviceTest = new CharacterService(mockRepo, mockIdService);
+        Character testCharacter = new Character(
+                "kugelfisch",
+                "kugel",
+                99,
+                "fisch"
+        );
+        CharacterWOId kugelfisch = new CharacterWOId(
+                "kugel",
+                99,
+                "fisch"
+        );
+
+        when(mockIdService.generateID()).thenReturn("kugelfisch");
+        //WHEN
+        serviceTest.createNewCharacter(kugelfisch);
+
+        //THEN
+        verify(mockRepo).save(testCharacter);
     }
 }
 
