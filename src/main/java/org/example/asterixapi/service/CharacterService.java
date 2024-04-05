@@ -34,8 +34,12 @@ public class CharacterService {
 
     public void deleteCharacter(String id) {
         repo.deleteById(id);
-
     }
+
+    public void updateCharacter (Character character){
+        repo.save(character);
+    }
+
 
 
 }

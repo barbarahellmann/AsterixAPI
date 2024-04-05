@@ -53,7 +53,36 @@ private final CharacterRepo mockRepo = mock(CharacterRepo.class);
         verify(mockRepo).findById("1");
     }
 
+    @Test
+    void test_updateCharacter(){
+        //GIVEN
+        CharacterService serviceTest = new CharacterService(mockRepo);
+        Character testCharacter = new Character(
+                "test",
+                "moin",
+                14,
+                "schueler"
+        );
+
+        //WHEN
+        serviceTest.updateCharacter(testCharacter);
+
+        //THEN
+        verify(mockRepo).save(testCharacter);
+    }
 
 
+    @Test
+    void deleteCharacter() {
+        //GIVEN
+        CharacterService serviceTest = new CharacterService(mockRepo);
+
+        //WHEN
+        serviceTest.deleteCharacter("string2");
+
+        //THEN
+        verify(mockRepo).deleteById("string2");
+    }
 }
+
 
